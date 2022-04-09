@@ -35,37 +35,45 @@ int main (int argc, char** argv)
         printf("Please enter 1 or 2\n");
     } while(1);
 
+
+
     printf("Enter a disk to edit: ");
     scanf("%[^\n]", buf);
 
     disk = (char*) malloc(sizeof(char) * strlen(buf));
     strcpy(disk, buf);
+    strcpy(buf, "");
 
+    partition_disk(isCfdisk, disk);
 
     printf("Select a file system to make: (only ext4 is supported for now) ");
     scanf("%[^\n]", buf);
 
     fs = (char*) malloc(sizeof(char) * strlen(buf));
     strcpy(disk, buf);
+    strcpy(buf, "");
 
     printf("Select a partition to create a file system on: ");
     scanf("%[^\n]", buf);
 
     part = (char*) malloc(sizeof(char) * strlen(buf));
     strcpy(disk, part);
+    strcpy(buf, "");
 
 
     printf("The system will be installed on %s using file system %s. Continue? [y/n] ", part, fs);
     scanf("%[^\n]", buf);
 
     if (strcmp(buf, "y") == 0) {
-
-        partition_disk(isCfdisk, disk);
         make_fs(fs, part);
         copy_sys_files();
     }
 
     printf("Finished!");
+
+    free(disk);
+    free(fs);
+    free(part);
 
     return 0;
 }
