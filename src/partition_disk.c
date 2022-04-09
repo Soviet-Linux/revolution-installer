@@ -20,15 +20,21 @@ int partition_disk (char choice, char* disk)
 
     if (choice) {
         strcpy(command, "/bin/cfdisk");
+
+        pid = fork();
+
+        if (pid == 0) {
+            execl(command, disk);
+        }
     }
     else {
         strcpy(command, "/bin/fdisk");
-    }
 
-    pid = fork();
+        pid = fork();
 
-    if (pid == 0) {
-        execl(command, disk);
+        if (pid == 0) {
+            execl(command, "");
+        }
     }
 
     waitpid(pid, NULL, 0);
