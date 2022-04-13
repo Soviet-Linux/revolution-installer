@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with revolution-installer. If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright 2022 Yannick Abouem
+ * Copyright 2022 AntaresMKII
  */
 
 #include "include/revolution.h"
