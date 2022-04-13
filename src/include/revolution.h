@@ -13,6 +13,17 @@ struct part {
     char* fs;
 };
 
+typedef struct {
+    char* root_pw;
+    struct user_acc* user;
+    struct part* part_list;
+    char* kb_layout;
+    char* hostname;
+    char* locale;
+    char* tzone;
+    char* grub_install;
+} instal_conf;
+
 extern int root_setup(); //set up the root password
 extern int user_setup(); //create a new user
 extern int partition_disk(char choice, char* disk); //executes cfdisk
