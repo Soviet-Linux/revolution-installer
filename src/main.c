@@ -64,7 +64,7 @@ int main (int argc, char** argv)
     char part[256];
     char buf2[256];
 
-    printf("\t\t***Welcome to Revolution!***\n\n##############################\n");
+    printf("***Welcome to Revolution!***\n\n##############################\n");
     printf("\nThe 'revolutionary' installer for Soviet Linux\n\n##############################\n");
 
     printf("Select a tool to partition the drive: \n1) fdisk\n2) cfdisk\n");
