@@ -34,7 +34,7 @@ int copy_sys_files()
 
     pid = fork();
     if (pid == 0) {
-        execl(command, opt, root, target);
+        execl(command, "revolution-cp", opt, root, target);
     }
 
     waitpid(pid, NULL, 0);

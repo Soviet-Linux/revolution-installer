@@ -40,7 +40,7 @@ int partition_disk (char choice, char* disk)
         pid = fork();
 
         if (pid == 0) {
-            execl(command, disk);
+            execl(command, "revolution-cfdisk", disk);
         }
     }
     else {

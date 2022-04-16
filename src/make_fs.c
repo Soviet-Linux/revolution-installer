@@ -22,20 +22,27 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 int make_fs (char* fs, char* disk)
 {
     char* command = "/usr/sbin/mkfs";
     int pid;
-    char* fs_arg;
+    char* fs_arg = (char*) malloc(strlen(fs) + 3);
+    if (fs_arg == NULL) {
+        return -1;
+    }
 
-    fs_arg = strcat("-t ", fs);
+    fs_arg[0] = '\0';
+    strcat(fs_arg, "-t ");
+    strcat(fs_arg, fs);
 
     pid = fork();
     if (pid == 0) {
-        execl(command, fs_arg, disk);
+        execl(command, "revolution-mkfs", fs_arg, disk);
     }
 
     waitpid(pid, NULL, 0);
+    free(fs_arg);
     return 0;
 }
