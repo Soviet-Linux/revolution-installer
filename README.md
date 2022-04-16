@@ -19,18 +19,18 @@ display the devices available and prompt the user for one
 9. Display and prompt the user for a device and a file system
 10. Review the installation settings
 11. Install the system:
-    a. Format and install filesystem
-    b. Mount the drives
-    c. Copy the system
-    d. Set the hostname
-    e. Set the locale
-    f. Set the timezone
-    g. Set the timezone
-    h. Set root password
-    i. Create the username and set groups
-    j. Create /etc/fstab
-    k. Install GRUB
-    l. Reboot
+12. Format and install filesystem
+13. Mount the drives
+14. Copy the system
+15. Set the hostname
+16. Set the locale
+17. Set the timezone
+18. Set the timezone
+19. Set root password
+20. Create the username and set groups
+21. Create /etc/fstab
+22. Install GRUB
+23. Reboot
 
 ## Development & Contributing
 Read the [development docs](https://github.com/Soviet-Linux/delevopment-docs) for more info.
