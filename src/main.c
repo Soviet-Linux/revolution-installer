@@ -108,7 +108,7 @@ int main (int argc, char** argv)
         copy_sys_files();
     }
 
-    printf("Finished!");
+    printf("Finished!\n");
 
     return 0;
 }

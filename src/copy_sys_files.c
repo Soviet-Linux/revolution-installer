@@ -25,8 +25,8 @@
 
 int copy_sys_files()
 {
-    char* command = "cp";
-    char* opt = "-axvnu";
+    char* command = "/usr/bin/cp";
+    char* opt = "-axvnur";
     char* root = "/";
     char* target = "/mnt/";
 

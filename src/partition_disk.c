@@ -29,13 +29,13 @@ int partition_disk (char choice, char* disk)
     char* command;
     int pid;
 
-    command = (char*) malloc(sizeof(char) * 12);
+    command = (char*) malloc(sizeof(char) * 20);
     if (command == NULL) {
         return -1;
     }
 
     if (choice) {
-        strcpy(command, "/bin/cfdisk");
+        strcpy(command, "/usr/sbin/cfdisk");
 
         pid = fork();
 

@@ -21,15 +21,19 @@
 #include "include/revolution.h"
 #include <sys/wait.h>
 #include <unistd.h>
+#include <string.h>
 
 int make_fs (char* fs, char* disk)
 {
-    char* command = "mkfs";
+    char* command = "/usr/sbin/mkfs";
     int pid;
+    char* fs_arg;
+
+    fs_arg = strcat("-t ", fs);
 
     pid = fork();
     if (pid == 0) {
-        execl(command, "-t", fs, disk);
+        execl(command, fs_arg, disk);
     }
 
     waitpid(pid, NULL, 0);
