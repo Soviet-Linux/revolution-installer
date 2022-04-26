@@ -105,7 +105,9 @@ int main (int argc, char** argv)
 
     if (strcmp(buf2, "y") == 0) {
         make_fs(fs, part);
+        mount_setup(part, fs);
         copy_sys_files();
+        generate_fstab(part, fs);
     }
 
     printf("Finished!\n");
