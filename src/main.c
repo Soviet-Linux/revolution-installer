@@ -104,9 +104,13 @@ int main (int argc, char** argv)
     scanf("%s", buf2);
 
     if (strcmp(buf2, "y") == 0) {
+        printf("[1] Making file system\n");
         make_fs(fs, part);
+        printf("[2] Mounting root file system\n");
         mount_setup(part, fs);
+        printf("[3] Copying system\n");
         copy_sys_files();
+        printf("[4] Generating fstab\n");
         generate_fstab(part, fs);
     }
 

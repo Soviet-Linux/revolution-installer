@@ -34,7 +34,7 @@ int make_fs (char* fs, char* disk)
     }
 
     fs_arg[0] = '\0';
-    strcat(fs_arg, "-t ");
+    strcat(fs_arg, "-t");
     strcat(fs_arg, fs);
 
     pid = fork();

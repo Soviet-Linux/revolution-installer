@@ -27,7 +27,7 @@ int copy_sys_files()
 {
     char* command = "/usr/bin/cp";
     char* opt = "-axvnur";
-    char* root = "/";
+    char* root = "/*";
     char* target = "/mnt/";
 
     int pid;
