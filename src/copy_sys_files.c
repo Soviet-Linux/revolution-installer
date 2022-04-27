@@ -22,22 +22,70 @@
 #include "include/revolution.h"
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 
 int copy_sys_files()
 {
-    char* command = "/usr/bin/cp";
-    char* opt = "-axvnur";
-    char* root = "/*";
-    char* target = "/mnt/";
+    char* command = "/usr/bin/tar";
+    int pipefd[2];
+    int pid1, pid2;
 
-    int pid;
-
-    pid = fork();
-    if (pid == 0) {
-        execl(command, "revolution-cp", opt, root, target);
+    if (pipe(pipefd)) {
+        printf("Error creating pipe\n");
+        return -1;
     }
 
-    waitpid(pid, NULL, 0);
+    (pid1 = fork()) && (pid2 = fork());
+
+    if (pid1 == 0) {
+        if (pipefd[1] != 0) {
+            dup2(pipefd[1], 1);
+            close(pipefd[1]);
+            close(pipefd[0]);
+        }
+
+        if(execl(command,
+                    "revolution-tar-producer",
+                    "--create",
+                    "--one-file-system",
+                    "--xattrs",
+                    "--file=-",
+                    "/")) {
+            puts(strerror(errno));
+            exit(127);
+        }
+    }
+
+    else if (pid2 == 0) {
+        if (pipefd[0] != 0) {
+            dup2(pipefd[0], 0);
+            close(pipefd[1]);
+            close(pipefd[0]);
+        }
+
+        if(execl(command,
+                    "revolution-tar-consumer",
+                    "--extract",
+                    "--xattrs",
+                    "--xattrs-include='*'",
+                    "--preserve-permissions",
+                    "-v",
+                    "-f-",
+                    "-C/mnt")) {
+            puts(strerror(errno));
+            exit(127);
+        }
+    }
+
+    else {
+        close(pipefd[0]);
+        close(pipefd[1]);
+        waitpid(pid1, NULL, 0);
+        waitpid(pid2, NULL, 0);
+    }
 
     return 0;
 }
