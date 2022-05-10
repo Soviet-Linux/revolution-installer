@@ -54,10 +54,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+void get_str(int len, char *arr){
+char ch;
+register int len_incr=0;
+while((ch=getchar())!=13&&len_incr<len){
+		*(arr+len_incr)=ch;
+		len_incr++;
+	}
+	*(arr+len)='\0';
+	}
 int main (int argc, char** argv)
 {
-    char buf[256];
+    char buf[2];
     char isCfdisk;
     char disk[256];
     char fs[256];
@@ -70,15 +78,32 @@ int main (int argc, char** argv)
     printf("Select a tool to partition the drive: \n1) fdisk\n2) cfdisk\n");
 
     do {
-        scanf("%s", buf);
-
+        get_str(1,buf);
         if (strcmp(buf, "1") == 0) {
+            char confirm[2];
+            printf("Are you sure you want to use fdisk?(Y/N):");
+            get_str(1,confirm);
+            if(strcmp(confirm,"Y")==0){
             isCfdisk = 0;
             break;
+            }
+            else{
+              printf("\nPlease enter 1 or 2\n");
+              strcpy(buf,"");
+            }
         }
         else if (strcmp(buf, "2") == 0) {
+            char confirm[2];
+            printf("Are you sure you want to use cfdisk?(Y/N):");
+            get_str(1,confirm);
+            if(strcmp(confirm,"Y")==0){
             isCfdisk = 1;
             break;
+            }
+            else{
+              printf("\nPlease enter 1 or 2\n");
+              strcpy(buf,"");
+            }
         }
 
         printf("Please enter 1 or 2\n");
