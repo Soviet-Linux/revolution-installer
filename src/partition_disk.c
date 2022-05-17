@@ -19,42 +19,76 @@
  * Copyright 2022 AntaresMKII
  */
 #include "include/revolution.h"
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <dirent.h>
 
-int partition_disk (char choice, char* disk)
+int partition_disk (char* disk)
 {
     char* command;
-    int pid;
+    int pid, status;
 
     command = (char*) malloc(sizeof(char) * 20);
     if (command == NULL) {
         return -1;
     }
 
-    if (choice) {
-        strcpy(command, "/usr/sbin/cfdisk");
+    strcpy(command, "/usr/sbin/cfdisk");
 
-        pid = fork();
+    pid = fork();
 
-        if (pid == 0) {
-            execl(command, "revolution-cfdisk", disk);
-        }
-    }
-    else {
-        strcpy(command, "/bin/fdisk");
-
-        pid = fork();
-
-        if (pid == 0) {
-            execl(command, "");
-        }
+    if (pid == 0) {
+        execl(command, "revolution-cfdisk", disk);
     }
 
-    waitpid(pid, NULL, 0);
+    waitpid(pid, &status, 0);
     free(command);
+    return status;
+}
 
+int list_dev()
+{
+    struct dirent *de;
+
+    DIR *dir = opendir("/dev/");
+
+    if (dir == NULL) {
+        printf("Failed to open /dir/\n");
+        return 1;
+    }
+
+    while ((de = readdir(dir)) != NULL) {
+        if (strncmp(de->d_name, "sd", 2) == 0 ||
+                strncmp(de->d_name, "nvme0",5) == 0) {
+            printf("/dev/%s\n", de->d_name);
+        }
+    }
+
+    closedir(dir);
     return 0;
+}
+
+int dpart_loop()
+{
+    char disk_path[100];
+    int rc = 1;
+
+    do {
+        printf("Enter a disk to edit (q to quit, l to list disks): ");
+        scanf("%s", disk_path);
+        if (strcmp(disk_path, "q") == 0) {
+            rc = 0;
+        }
+        else if (strcmp(disk_path, "l") == 0) {
+            list_dev();
+        }
+        else {
+            partition_disk(disk_path);
+        }
+    } while (rc);
+
+    return rc;
 }

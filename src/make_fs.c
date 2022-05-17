@@ -19,6 +19,7 @@
  * Copyright 2022 AntaresMKII
  */
 #include "include/revolution.h"
+#include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
@@ -45,4 +46,53 @@ int make_fs (char* fs, char* disk)
     waitpid(pid, NULL, 0);
     free(fs_arg);
     return 0;
+}
+
+int fs_loop(p_list *list)
+{
+    char part_path[100];
+    char file_sys[100];
+    char sel;
+    int rc = 1;
+    part *curr;
+
+    do {
+        printf("Enter a partition for file system creation: (q to quit, l to list disks): ");
+        scanf("%s", part_path);
+        if (strcmp(part_path, "q") == 0) {
+            rc = 0;
+            break;
+        }
+        else if (strcmp(part_path, "l") == 0) {
+            list_dev();
+        }
+
+        printf("Enter a file system to use (q to quit): ");
+        scanf("%s", file_sys);
+        if (strcmp(file_sys, "q") == 0) {
+            rc = 0;
+        }
+        else if (strcmp(file_sys, "ext4") != 0) {
+            printf("This file system is not supported yet.\n");
+        }
+        else {
+            make_fs(file_sys, part_path);
+
+            curr = (part *) malloc(sizeof(part));
+            curr->path = (char *) malloc(strlen(part_path));
+            curr->fs = (char *) malloc(strlen(file_sys));
+
+            strcpy(curr->path, part_path);
+            strcpy(curr->fs, file_sys);
+
+            if (list->first == NULL) {
+                list->first = curr;
+            }
+
+            curr = curr->next;
+        }
+
+    } while (rc);
+
+    return rc;
 }

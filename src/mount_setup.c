@@ -24,11 +24,32 @@
 #include <string.h>
 #include <sys/mount.h>
 
-int mount_setup(char* part, char*fs)
+int mount_setup(p_list *list)
 {
-    int err;
+    char mnt_point[100];
+    part *curr = list->first;
 
-    err = mount(part, "/mnt", fs, 0, NULL);
+    if (curr == NULL) {
+        return 1;
+    }
 
-    return err;
+    printf("Choose the mounting point for the following partitions.\n");
+    printf("You can quit at any time by entering q.\n");
+
+    while (curr != NULL) {
+        printf("Partition %s of type %s :", curr->path, curr->fs);
+        scanf("%s", mnt_point);
+
+        if (strcmp(mnt_point, "q") == 0) {
+            break;
+        }
+        else {
+            curr->mnt_point = (char *) malloc(strlen(mnt_point));
+            strcpy(curr->mnt_point, mnt_point);
+
+            curr = curr->next;
+        }
+    }
+
+    return 0;
 }

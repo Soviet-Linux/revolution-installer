@@ -54,6 +54,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 void get_str(int len, char *arr)
 {
 	char ch;
@@ -62,88 +63,28 @@ void get_str(int len, char *arr)
 	do {
 	    *(arr+len_incr) = ch;
 	    len_incr++;
-        } while((ch=getchar())!=13&&len_incr<len);
+    } while((ch=getchar()) != 13 && len_incr < len);
 	
-	
-	*(arr+len)='\0';
+	*(arr + len) = '\0';
 }
+
 int main (int argc, char** argv)
 {
-    char buf[2];
-    char isCfdisk;
-    char disk[256];
-    char fs[256];
-    char part[256];
-    char buf2[256];
 
-    printf("***Welcome to Revolution!***\n\n##############################\n");
-    printf("\nThe 'revolutionary' installer for Soviet Linux\n\n##############################\n");
+    p_list part_list;
 
-    printf("Select a tool to partition the drive: \n1) fdisk\n2) cfdisk\n");
-
-    do {
-        get_str(1, buf);
-        if (strcmp(buf, "1") == 0) {
-        	char confirm[2];
-        	printf("Are you sure you want to use fdisk?(Y/N):");
-        	get_str(1, confirm);
-        	if(strcmp(confirm, "Y")==0){
-                	isCfdisk = 0;
-            		break;
-            	}	
-    	else{
-        	printf("\nPlease enter 1 or 2\n");
-              	strcpy(buf,"");
-            }
-        }
-        else if (strcmp(buf, "2") == 0) {
-       		char confirm[2];
-            	printf("Are you sure you want to use cfdisk?(Y/N):");
-            	get_str(1, confirm);
-            	if(strcmp(confirm, "Y")==0){
-            		isCfdisk = 1;
-            		break;
-        }
-        else {
-        	printf("\nPlease enter 1 or 2\n");
-              	strcpy(buf,"");
-            }
-        }
-
-        printf("Please enter 1 or 2\n");
-        strcpy(buf, "");
-
-    } while(1);
-
-
-
-    printf("Enter a disk to edit: ");
-    scanf("%s", disk);
-    printf("%s\n", disk);
-
-    partition_disk(isCfdisk, disk);
-
-    printf("Select a file system to make: (only ext4 is supported for now) ");
-    scanf("%s", fs);
-
-    printf("Select a partition to create a file system on: ");
-    scanf("%s", part);
-
-    printf("The system will be installed on %s using file system %s. Continue? [y/n] ", part, fs);
-    scanf("%s", buf2);
-
-    if (strcmp(buf2, "y") == 0) {
-        printf("[1] Making file system\n");
-        make_fs(fs, part);
-        printf("[2] Mounting root file system\n");
-        mount_setup(part, fs);
-        printf("[3] Copying system\n");
-        copy_sys_files();
-        printf("[4] Generating fstab\n");
-        generate_fstab(part, fs);
+    printf("=== Disk Partition ===\n");
+    if (dpart_loop()) {
+        printf("Error partitioning drive\nQuitting...\n");
+        exit(EXIT_FAILURE);
     }
 
-    printf("Finished!\n");
+    printf("=== File System Creation ===\n");
+    if (fs_loop(&part_list)) {
+        printf("Error creating file system!\n Quitting...\n");
+        exit(EXIT_FAILURE);
+    }
 
-    return 0;
+    printf("=== Mount Setup ===\n");
+    mount_setup(&part_list);
 }
