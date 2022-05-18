@@ -77,7 +77,7 @@ int dpart_loop()
     int rc = 1;
 
     do {
-        printf("Enter a disk to edit (q to quit, l to list disks): ");
+        printf("Enter a disk to edit (c to continue, l to list disks): ");
         scanf("%s", disk_path);
         if (strcmp(disk_path, "q") == 0) {
             rc = 0;

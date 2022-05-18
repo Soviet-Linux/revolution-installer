@@ -34,13 +34,13 @@ int mount_setup(p_list *list)
     }
 
     printf("Choose the mounting point for the following partitions.\n");
-    printf("You can quit at any time by entering q.\n");
+    printf("You can continue to the next step by entering c.\n");
 
     while (curr != NULL) {
         printf("Partition %s of type %s :", curr->path, curr->fs);
         scanf("%s", mnt_point);
 
-        if (strcmp(mnt_point, "q") == 0) {
+        if (strcmp(mnt_point, "c") == 0) {
             break;
         }
         else {
