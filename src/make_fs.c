@@ -57,9 +57,9 @@ int fs_loop(p_list *list)
     part *curr;
 
     do {
-        printf("Enter a partition for file system creation: (q to quit, l to list disks): ");
+        printf("Enter a partition for file system creation: (c to continue, l to list disks): ");
         scanf("%s", part_path);
-        if (strcmp(part_path, "q") == 0) {
+        if (strcmp(part_path, "c") == 0) {
             rc = 0;
             break;
         }
@@ -67,9 +67,9 @@ int fs_loop(p_list *list)
             list_dev();
         }
 
-        printf("Enter a file system to use (q to quit): ");
+        printf("Enter a file system to use (c to continue): ");
         scanf("%s", file_sys);
-        if (strcmp(file_sys, "q") == 0) {
+        if (strcmp(file_sys, "c") == 0) {
             rc = 0;
         }
         else if (strcmp(file_sys, "ext4") != 0) {
