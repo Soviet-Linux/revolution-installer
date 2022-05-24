@@ -79,7 +79,7 @@ int dpart_loop()
     do {
         printf("Enter a disk to edit (c to continue, l to list disks): ");
         scanf("%s", disk_path);
-        if (strcmp(disk_path, "q") == 0) {
+        if (strcmp(disk_path, "c") == 0) {
             rc = 0;
         }
         else if (strcmp(disk_path, "l") == 0) {
