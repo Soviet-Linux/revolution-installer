@@ -45,6 +45,9 @@ int mount_setup(p_list *list)
         }
         else {
             curr->mnt_point = (char *) malloc(strlen(mnt_point));
+            if (curr->mnt_point == NULL){
+                exit(EXIT_FAILURE);
+            }
             strcpy(curr->mnt_point, mnt_point);
 
             curr = curr->next;
