@@ -1,7 +1,7 @@
 # tool macros
 CC ?= gcc
 CCFLAGS :=
-DBGFLAGS := -g
+DBGFLAGS := -ggdb
 CCOBJFLAGS := $(CCFLAGS) -c
 
 # path macros

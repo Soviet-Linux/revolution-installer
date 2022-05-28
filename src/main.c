@@ -72,6 +72,7 @@ int main (int argc, char** argv)
 {
 
     p_list part_list;
+    part_list.first = NULL;
 
     printf("=== Disk Partition ===\n");
     if (dpart_loop()) {

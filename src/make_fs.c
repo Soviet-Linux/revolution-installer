@@ -82,6 +82,10 @@ int fs_loop(p_list *list)
             curr->path = (char *) malloc(strlen(part_path));
             curr->fs = (char *) malloc(strlen(file_sys));
 
+            if (curr == NULL || curr->path == NULL || curr->fs == NULL) {
+                exit(EXIT_FAILURE);
+            }
+
             strcpy(curr->path, part_path);
             strcpy(curr->fs, file_sys);
 
