@@ -55,7 +55,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define SQ_PATH
+#define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
 
 void get_str(int len, char *arr)
 {
@@ -97,6 +97,8 @@ int main (int argc, char** argv)
     printf("=== Mounting Remaining Devices ===\n");
     mount_dev(&part_list);
 
-    printf("=== Extracting Squashfs Immage ===\n");
+    printf("=== Extracting Squashfs Image ===\n");
     copy_sys_files(SQ_PATH, "/mnt/");
+
+    printf("DONE!");
 }
