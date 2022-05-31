@@ -23,3 +23,5 @@ extern int generate_fstab(char* part, char* fs); //generates /etc/fstab
 extern int dpart_loop(); //disk partition prompt loop
 extern int list_dev();
 extern int fs_loop(p_list *list);
+extern int mount_root(p_list *list);
+extern int mount_dev(p_list *list);

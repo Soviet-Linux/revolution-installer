@@ -88,4 +88,12 @@ int main (int argc, char** argv)
 
     printf("=== Mount Setup ===\n");
     mount_setup(&part_list);
+
+    printf("=== Mounting Root File System ===\n");
+    mount_root(&part_list);
+
+    printf("=== Mounting Remaining Devices ===\n");
+    mount_dev(&part_list);
+
+
 }
