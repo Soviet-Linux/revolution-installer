@@ -17,7 +17,7 @@ extern int root_setup(); //set up the root password
 extern int user_setup(); //create a new user
 extern int make_fs(char* fs, char* disk); //makes new file system on disk
 extern int mount_setup(p_list *list); //specifies mounting points for directories
-extern int copy_sys_files(); //copy the system files from the iso to the disk
+extern int copy_sys_files(char *sq_path, char *target); //copy the system files from the iso to the disk
 extern int recompile_kernel(); //recompiles the kernel following user directions
 extern int generate_fstab(char* part, char* fs); //generates /etc/fstab
 extern int dpart_loop(); //disk partition prompt loop

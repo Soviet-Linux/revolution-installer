@@ -55,6 +55,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define SQ_PATH
+
 void get_str(int len, char *arr)
 {
 	char ch;
@@ -95,5 +97,6 @@ int main (int argc, char** argv)
     printf("=== Mounting Remaining Devices ===\n");
     mount_dev(&part_list);
 
-
+    printf("=== Extracting Squashfs Immage ===\n");
+    copy_sys_files(SQ_PATH, "/mnt/");
 }
