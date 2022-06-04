@@ -27,20 +27,30 @@
 #include <errno.h>
 #include <string.h>
 
+#define BUNDLEPATH "/run/initramfs/memory/data/soviet-linux/01-core.sb"
+
 int copy_sys_files(char *sq_path, char *target)
 {
     char *command = "/usr/bin/unsquashfs";
-    char* args[] = {"revolution-unsquashfs", "-x", "-li", "-f", "-d "};
+    char* args[] = {"revolution-unsquashfs", "-x", "-li", "-f", "-d"};
     char path[100];
+
+    int *stat;
 
     int pid = fork();
 
     if (pid == 0) {
         strcpy(path, args[4]);
         strcat(path, target);
-        execl(command, args[0], args[1], args[2], args[3], path);
+        execl(command, args[0], args[1], args[2], args[3], path, sq_path);
     }
 
-    waitpid(pid, NULL, 0);
+    waitpid(pid, stat, 0);
+
+    if (*stat != 0) {
+        printf("Error extracting files from squashfs image\n");
+        exit(EXIT_FAILURE);
+    }
+
     return 0;
 }
