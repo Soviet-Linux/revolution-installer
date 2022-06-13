@@ -35,6 +35,10 @@ and it will not work on an installed system.
 
 2. Follow the steps indicated by the interactive program.
 
+## Docs
+You can view the docs in the DOC/ folder. It contains a pdf version as well as
+the LaTeX source files.
+
 ## Contributing
 
 You are free to contribute ideas and implementations to this project.

@@ -1,0 +1,132 @@
+%
+% This file is part of revolution-installer.
+% revolution-installer is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by the
+% Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% revolution-installer is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+% See the GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with revolution-installer. If not, see <https://www.gnu.org/licenses/>.
+%
+% Copyright 2022 AntaresMKII
+
+\documentclass{scrartcl}
+
+\title{Revolution Installer}
+\author{AntaresMkII a.k.a. ComradeKrasMazov}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Introduction}
+This document outlines the technical specifications and implementation of the
+program revolution-installer developed for Soviet Linux by the Soviet Linux
+development team and its front-end, Revolution. If you have inquires on this
+document or you wish to suggest changes please do so in our official Discord
+server.
+
+\section{Running Revolution-installer}
+Revolution-installer comes pre-packaged in the Soviet Linux official ISO image
+and can be executed as root user in bash by running the \texttt{revolution}
+command. This will execute the Revolution front-end program which will guide
+the user trough the installation process using TUI prompts. In addition it will
+also provide a "one command" installation process, which consists in executing
+the \texttt{revolution} command with a set of arguments to configure the system.
+
+\section{The Revolution-installer API}
+The Revolution-installer provides an API to install the system. This API is
+specific for the Soviet Linux system, however it could be ported to another
+operating system. The API makes use of the CCCP package manager and its library
+to install the system and additional packages.
+
+\subsection{Locale}
+\subsubsection{setlocale}
+The \texttt{setlocale} API call will set the specified locale
+\subsubsection{showlocale}
+The \texttt{showlocale} API call will display all available locale
+
+\subsection{Keyboard format}
+\subsubsection{setkb}
+The \texttt{setkb} API call will set the keyboard according to the argument
+passed by the user. It follows the standard naming scheme for keyboards
+\subsubsection{listkb}
+This API call will return a list of keyboard layouts that can be chosen by the
+user.
+
+\subsection{Hostname}
+To set a user defined hostname use the \texttt{sethost} API call. It will set
+the hostname for the system to be installed.
+
+\subsection{Time Zone}
+\subsubsection{listzones}
+Returns a list of available zones. This API call will work differently depending
+on the argument passed. If the argument is an empty string or a NULL pointer
+the return will be a list of string representing the continent of the time zone.
+Otherwise if the argument is a continent then it will return a list of time
+zones available.
+\subsubsection{setzone}
+Set the time zone. It accepts two strings as arguments: one for the continent
+one for the time zone.
+
+\subsection{Root user and User creation}
+\subsubsection{setrootpasswd}
+This API call sets the root password. It accepts one string argument.
+\subsubsection{createuser}
+This API call creates a new user. By default revolution-installer will set
+the default user settings as defined in \texttt{man useradd}, however it
+is possible to add additional arguments to this API call to change its behaviour.
+Here is a list of acceptable arguments:
+% TODO: Add a list here with all arguments for createuser
+
+This function returns an integer, defined as user id. Store this value as it
+will be necessary to complete the user setup.
+\subsubsection{setuserpasswd}
+This API call sets the user password using the argument passed. It require a
+user id to be passed as argument.
+
+\subsection{User Goups}
+After a user is created use the following calls to set its groups. It is necessary
+for a user to be already created for these calls to work properly.
+\subsubsection{listgroups}
+Given a user id, returned by \texttt{createuser}, it will return a list of
+groups structures. These structures contain the group name as well as a value
+indicating if the user is part of these groups: 1 if it is, 0 if it is not.
+\subsubsection{setgroups}
+Sets the groups for the user. Specify the groups in a list of groups structures
+and provide a user id.
+
+\subsection{Network}
+As of \date Soviet Linux only officially supports only wired connections, so
+revolution-installer will support only those as well. This will be changed in
+future versions of the software.
+% TODO: Complete network section. When you have internet
+
+\subsection{Installation Medium Selection}
+Revolution-installer supports multiple ways to install the system. It is possible
+to install Soviet Linux from the local ISO, from the official rootfs tarball or
+trough the CCCP. The CCCP option require the system to  be recompiled from scratchbut it will provide the most up to date packages, while the tarball and the ISO
+will be faster to install but might be out of date.
+\subsubsection{setinstmethod}
+This call sets the installation method. It accepts one of the following
+arguments:
+\begin{description}
+    \item[LOCAL] uses the local ISO image to install the system
+    \item[TARBALL] uses the rootfs tarball to install the system
+    \item[SOURCE] uses CCCP to install the system
+\end{description}
+
+\subsection{Disk partition}
+
+
+\section*{Appendix A: License}
+This document ad its source code are distributed under The GNU GPL v3.0. For
+more information on this licence visit: https://www.gnu.org/licenses/
+
+Copyright 2022 AntaresMkII
+
+\end{document}
