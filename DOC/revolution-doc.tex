@@ -121,6 +121,13 @@ arguments:
 \end{description}
 
 \subsection{Disk partition}
+Disk partition, in Revolution-installer, occurs trough the use of partx as a
+backend. The API will simply act as a buffer between the front-end and partx.
+It will also simplify the interface.
+\subsubsection{addpart}
+Adds a new partition to the specified disk of the defined size. It returns an id
+to identify the partition.
+
 
 
 \section*{Appendix A: License}
