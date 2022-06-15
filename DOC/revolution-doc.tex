@@ -109,7 +109,8 @@ future versions of the software.
 \subsection{Installation Medium Selection}
 Revolution-installer supports multiple ways to install the system. It is possible
 to install Soviet Linux from the local ISO, from the official rootfs tarball or
-trough the CCCP. The CCCP option require the system to  be recompiled from scratchbut it will provide the most up to date packages, while the tarball and the ISO
+trough the CCCP. The CCCP option require the system to  be recompiled from scratc
+hbut it will provide the most up to date packages, while the tarball and the ISO
 will be faster to install but might be out of date.
 \subsubsection{setinstmethod}
 This call sets the installation method. It accepts one of the following
@@ -124,13 +125,33 @@ arguments:
 Disk partition, in Revolution-installer, occurs trough the use of partx as a
 backend. The API will simply act as a buffer between the front-end and partx.
 It will also simplify the interface.
-\subsubsection{addpart}
-Adds a new partition to the specified disk of the defined size. It returns an id
-to identify the partition.
+% TODO: complete disk partition
 
+\subsection{File system}
+\subsubsection{setfs}
+Accepts a disk id and a fs type. It will format the disk with that file system.
 
+\subsection{Additional Programs}
+To make the Soviet Linux experience more enjoyable, revolution-installer adds
+the option to install additional software at installation.
+\subsubsection{addpkg}
+Adds a package to be installed. Accepts a name of a program listed in the OUR.
+\subsubsection{rmpkg}
+Removes a package from the list of packages to be installed.
+\subsubsection{listpkg}
+Lists the packages to be installed.
+\subsubsection{getkern}
+Downloads the specified kernel version. If version undefined it will download
+the latest version available trough the CCCP. This function returns the location
+where the kernel source files are located.
+\subsubsection{recompkern}
+Recompiles the kernel and installs it.
 
-\section*{Appendix A: License}
+\section{System Installation}
+After the setup is complete to install the system make the \texttt{install}
+API call.
+
+\section{Appendix A: License}
 This document ad its source code are distributed under The GNU GPL v3.0. For
 more information on this licence visit: https://www.gnu.org/licenses/
 
