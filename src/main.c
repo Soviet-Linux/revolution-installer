@@ -57,19 +57,6 @@
 
 #define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
 
-void get_str(int len, char *arr)
-{
-	char ch;
-	register int len_incr = -1;
-	
-	do {
-	    *(arr+len_incr) = ch;
-	    len_incr++;
-    } while((ch=getchar()) != 13 && len_incr < len);
-	
-	*(arr + len) = '\0';
-}
-
 int main (int argc, char** argv)
 {
 
