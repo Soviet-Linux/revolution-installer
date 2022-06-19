@@ -26,6 +26,8 @@
 #include <string.h>
 #include <unistd.h>
 
+//#define DEBUGGING
+
 int generate_fstab (char* part, char* fs)
 {
     char* path = "/mnt/etc/fstab";
@@ -38,6 +40,9 @@ int generate_fstab (char* part, char* fs)
     fd = open(path, O_CREAT | O_WRONLY);
 
     if (fd == -1) {
+        #ifdef DEBUGGING
+            perror("Can't open/create fstab, error:");
+        #endif
         return errno;
     }
 
