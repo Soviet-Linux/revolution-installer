@@ -140,7 +140,24 @@ API call. This call will begin the installation process following these steps:
     \item Fetch the base system, if TARBALL is selected. It will fetch and
         compile the preliminary tools if SOURCE is selected.
     \item Unpack the downloaded tarball
+        % TODO: Finish this list
 \end{itemize}
+
+\section{System configuration and Deployment}
+In addition to standard installation and configuration, revolution-installer
+also offers the ability to create and export configuration files containing a
+list of packages to be installed at system installation. These config files
+should be standard and portable and should work on any Soviet Linux system.
+The config file used at system installation is conserved for future use in
+/etc/revolution.d/config.rev file.
+\subsection{revolution export}
+To help with the creation of config files, revolution-installer offers a simple
+program that will create a config file based on the current system. The file
+will be then saved in the path specified by the passed argument.
+\subsection{config.rev specification and syntax}
+The config files used by revolution-installer should use the .rev extension
+and they should follow a specified standard and syntax.
+% TODO: determine the syntax for .rev files
 
 \section{Appendix A: License}
 This document ad its source code are distributed under The GNU GPL v3.0. For
