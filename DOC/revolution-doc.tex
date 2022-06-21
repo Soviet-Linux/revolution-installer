@@ -125,31 +125,22 @@ arguments:
 Disk partition, in Revolution-installer, occurs trough the use of partx as a
 backend. The API will simply act as a buffer between the front-end and partx.
 It will also simplify the interface.
-% TODO: complete disk partition
+% TODO: complete disk partition. Consider using libparted
 
 \subsection{File system}
 \subsubsection{setfs}
 Accepts a disk id and a fs type. It will format the disk with that file system.
 
-\subsection{Additional Programs}
-To make the Soviet Linux experience more enjoyable, revolution-installer adds
-the option to install additional software at installation.
-\subsubsection{addpkg}
-Adds a package to be installed. Accepts a name of a program listed in the OUR.
-\subsubsection{rmpkg}
-Removes a package from the list of packages to be installed.
-\subsubsection{listpkg}
-Lists the packages to be installed.
-\subsubsection{getkern}
-Downloads the specified kernel version. If version undefined it will download
-the latest version available trough the CCCP. This function returns the location
-where the kernel source files are located.
-\subsubsection{recompkern}
-Recompiles the kernel and installs it.
-
 \section{System Installation}
 After the setup is complete to install the system make the \texttt{install}
-API call.
+API call. This call will begin the installation process following these steps:
+\begin{itemize}
+    \item Partition the disk
+    \item Install the fs
+    \item Fetch the base system, if TARBALL is selected. It will fetch and
+        compile the preliminary tools if SOURCE is selected.
+    \item Unpack the downloaded tarball
+\end{itemize}
 
 \section{Appendix A: License}
 This document ad its source code are distributed under The GNU GPL v3.0. For
