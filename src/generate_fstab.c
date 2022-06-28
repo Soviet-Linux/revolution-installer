@@ -60,12 +60,14 @@ int generate_fstab (p_list* list)
         write(fd, curr->fs, strlen(curr->fs));
         write(fd, " ", 1);
 
-        if (strcmp(curr->path, "/") == 0) {
+        if (strcmp(curr->mnt_point, "/") == 0) {
             write(fd, rootfs_entry, strlen(rootfs_entry));
         }
         else {
             write(fd, otherfs_entry, strlen(otherfs_entry));
         }
+
+        curr = curr->next;
     }
 
 

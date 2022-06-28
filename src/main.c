@@ -57,7 +57,8 @@
 #include <unistd.h>
 #include <errno.h>
 
-#define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
+//#define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
+#define SQ_PATH "/media/iso/soviet-linux/01-core.sb"
 
 void get_str(int len, char *arr)
 {
@@ -112,7 +113,9 @@ int main (int argc, char** argv)
     chroot("/mnt/");
 
     printf("=== Generating fs tab ===\n");
-    generate_fstab(&part_list);
+    if (0 != generate_fstab(&part_list)) {
+        printf("Error generating fstab. ERRNO:%s\n", strerror(errno));
+    }
 
-    printf("DONE!");
+    printf("DONE!\n");
 }
