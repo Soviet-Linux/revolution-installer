@@ -94,10 +94,14 @@ int mount_setup(p_list *list)
             strcpy(curr->mnt_point, mnt_point);
 
             curr = curr->next;
+
+            curr = (part *) malloc(sizeof(part));
         }
     }
+
+    free(curr);
 
     return 0;
 }
 //If you are reading this go to this URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-
+//Best comment right here ^^^^
