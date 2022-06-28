@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 int copy_sys_files(char *sq_path, char *target)
 {
@@ -39,6 +41,77 @@ int copy_sys_files(char *sq_path, char *target)
     }
 
     waitpid(pid, NULL, 0);
+
+    return 0;
+}
+
+int move_boot_dir()
+{
+    if (rename("/boot2", "/boot") != 0) {
+        printf("Error moving boot directory. ERRNO: %s\n", strerror(errno));
+    }
+
+    return 0;
+}
+
+int create_grub_conf(p_list* list)
+{
+    part* root = list->first;
+    char* path = "/boot/grub/grub.cfg";
+    int fd;
+    char* buff;
+    char* grub_disk; //for grub disk format
+    char sndlast;
+
+    while (root != NULL) {
+        if (strcmp(root->mnt_point, "/")) {
+            break;
+        }
+
+        root = root->next;
+    }
+
+    if (root == NULL) {
+        return -1;
+    }
+
+    //this is not the best way to do this... Will need some rework
+
+    fd = open(path, O_CREAT | O_WRONLY);
+
+    buff = "set default=0\nset timeout=5\n\ninsmod ext2\nset root=";
+    write(fd, buff, strlen(buff));
+
+    sndlast = root->path[strlen(root->path) -2];
+
+    if (sndlast == 'a') {
+        sndlast = '0';
+    }
+    else if (sndlast == 'b') {
+        sndlast = '1';
+    }
+    else if (sndlast == 'c') {
+        sndlast = '2';
+    }
+    else {
+        printf("This program can't count above 3! You will have to configure the rest of %s by yourself.\n", path);
+    }
+
+    grub_disk = (char*) malloc(7);
+    grub_disk = strcat("(hd", &sndlast);
+    grub_disk = strcat(grub_disk, &root->path[strlen(root->path)-1]);
+    grub_disk = strcat(grub_disk, ")");
+
+    buff = grub_disk;
+    write(fd, buff, strlen(buff));
+
+    buff = "\n\nmenuentry \"Soviet Linux\" {\n\tlinux /boot/vmlinuz root=";
+    write(fd, buff, strlen(buff));
+    write(fd, root->path, strlen(root->path));
+
+    buff = " ro\n}";
+
+    close(fd);
 
     return 0;
 }

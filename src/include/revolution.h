@@ -26,3 +26,5 @@ extern int fs_loop(p_list *list);
 extern int mount_root(p_list *list);
 extern int mount_dev(p_list *list);
 extern int mount_virtkfs();
+extern int move_boot_dir();
+extern int create_grub_conf();
