@@ -55,6 +55,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 
 #define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
 
@@ -102,7 +103,10 @@ int main (int argc, char** argv)
     copy_sys_files(SQ_PATH, "/mnt/");
 
     printf("=== Mounting Virtual Kernel File System ===\n");
-    mount_virtkfs();
+    if (mount_virtkfs() == -1) {
+        printf("Error Mounting virtual kernel file system. ERRNO: %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
 
     printf("=== Entering chroot Environment ===\n");
     chroot("/mnt/");

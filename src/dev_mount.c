@@ -110,13 +110,15 @@ int mount_virtkfs()
     char* sysfs = "/mnt/sys";
     char* tmpfs = "/mnt/run";
 
-    mount("/dev", dev_dir, NULL, MS_BIND, NULL);
-    mount("/dev/pts", dev_pts, NULL, MS_BIND, NULL);
-    mount("proc", proc, "proc", 0, NULL);
-    mount("sysfs", sysfs, "sysfs", 0, NULL);
-    mount("tmpfs", tmpfs, "tmpfs", 0, NULL);
+    int rc = 0;
 
-    return 0;
+    rc += mount("/dev", dev_dir, NULL, MS_BIND, NULL);
+    rc += mount("/dev/pts", dev_pts, NULL, MS_BIND, NULL);
+    rc += mount("proc", proc, "proc", 0, NULL);
+    rc += mount("sysfs", sysfs, "sysfs", 0, NULL);
+    rc += mount("tmpfs", tmpfs, "tmpfs", 0, NULL);
+
+    return rc;
 }
 //If you are reading this go to this URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 //Best comment right here ^^^^
