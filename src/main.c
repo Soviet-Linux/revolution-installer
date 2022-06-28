@@ -117,5 +117,10 @@ int main (int argc, char** argv)
         printf("Error generating fstab. ERRNO:%s\n", strerror(errno));
     }
 
-    printf("DONE!\n");
+    printf("=== Setting up Boot Loader ===\n");
+    move_boot_dir();
+    create_grub_conf(&part_list);
+
+    printf("=== Rebooting! ===\n");
+    //system("shutdown -r now");
 }
