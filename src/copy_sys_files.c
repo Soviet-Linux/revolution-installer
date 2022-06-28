@@ -29,5 +29,36 @@
 
 int copy_sys_files(char *sq_path, char *target)
 {
+    char* dest;
+    char* force = "-f";
+    int pid;
+    int* stat;
+
+    dest = (char *) malloc(strlen(target) + 3);
+    if (dest == NULL) {
+        return -1;
+    }
+
+    dest[0] = '\0';
+    strcat(dest, "-d");
+    strcat(dest, target);
+
+    pid = fork();
+
+    if (pid == 0) {
+        execl("/usr/bin/unsquashfs", "revolution-unsquashfs", dest, force, sq_path);
+    }
+
+    waitpid(pid, stat, 0);
+    free(dest);
+
+    if (*stat == 0) {
+        printf("System files copied successfully!\n");
+    }
+    else {
+        printf("Error extracting files using unsquashfs. ERRNO: %d\n", *stat);
+        exit(EXIT_FAILURE);
+    }
+
     return 0;
 }
