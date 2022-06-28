@@ -101,5 +101,22 @@ int mount_setup(p_list *list)
 
     return 0;
 }
+
+int mount_virtkfs()
+{
+    char* dev_dir = "/mnt/dev";
+    char* dev_pts = "/mnt/dev/pts";
+    char* proc = "/mnt/proc";
+    char* sysfs = "/mnt/sys";
+    char* tmpfs = "/mnt/run";
+
+    mount("/dev", dev_dir, NULL, MS_BIND, NULL);
+    mount("/dev/pts", dev_pts, NULL, MS_BIND, NULL);
+    mount("proc", proc, "proc", 0, NULL);
+    mount("sysfs", sysfs, "sysfs", 0, NULL);
+    mount("tmpfs", tmpfs, "tmpfs", 0, NULL);
+
+    return 0;
+}
 //If you are reading this go to this URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 //Best comment right here ^^^^

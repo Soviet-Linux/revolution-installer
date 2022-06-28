@@ -54,6 +54,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
 
@@ -99,6 +100,15 @@ int main (int argc, char** argv)
 
     printf("=== Extracting Squashfs Image ===\n");
     copy_sys_files(SQ_PATH, "/mnt/");
+
+    printf("=== Mounting Virtual Kernel File System ===\n");
+    mount_virtkfs();
+
+    printf("=== Entering chroot Environment ===\n");
+    chroot("/mnt/");
+
+    printf("=== Generating fs tab ===\n");
+    generate_fstab(&part_list);
 
     printf("DONE!");
 }

@@ -19,9 +19,10 @@ extern int make_fs(char* fs, char* disk); //makes new file system on disk
 extern int mount_setup(p_list *list); //specifies mounting points for directories
 extern int copy_sys_files(char *sq_path, char *target); //copy the system files from the iso to the disk
 extern int recompile_kernel(); //recompiles the kernel following user directions
-extern int generate_fstab(char* part, char* fs); //generates /etc/fstab
+extern int generate_fstab(p_list* list); //generates /etc/fstab
 extern int dpart_loop(); //disk partition prompt loop
 extern int list_dev();
 extern int fs_loop(p_list *list);
 extern int mount_root(p_list *list);
 extern int mount_dev(p_list *list);
+extern int mount_virtkfs();
