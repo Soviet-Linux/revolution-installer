@@ -94,8 +94,6 @@ int mount_setup(p_list *list)
             strcpy(curr->mnt_point, mnt_point);
 
             curr = curr->next;
-
-            curr = (part *) malloc(sizeof(part));
         }
     }
 
