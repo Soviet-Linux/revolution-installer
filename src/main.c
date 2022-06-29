@@ -57,7 +57,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
+#define SQ_PATH "/run/initramfs/memory/data/soviet-linux/01-core.sb"
 
 void get_str(int len, char *arr)
 {
