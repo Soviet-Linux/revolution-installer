@@ -28,3 +28,4 @@ extern int mount_dev(p_list *list);
 extern int mount_virtkfs();
 extern int move_boot_dir();
 extern int create_grub_conf(p_list* list);
+extern int gen_base_dir();

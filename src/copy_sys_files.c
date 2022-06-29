@@ -28,6 +28,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 int copy_sys_files(char *sq_path, char *target)
 {
@@ -50,6 +51,19 @@ int move_boot_dir()
     if (rename("/boot2", "/boot") != 0) {
         printf("Error moving boot directory. ERRNO: %s\n", strerror(errno));
     }
+
+    return 0;
+}
+
+int gen_base_dir()
+{
+    mkdir("/mnt/dev", 0555);
+    mkdir("/mnt/media", 0555);
+    mkdir("/mnt/mnt", 0755);
+    mkdir("/mnt/proc", 0555);
+    mkdir("/mnt/run", 0555);
+    mkdir("/mnt/sys", 0555);
+    mkdir("/mnt/tmp", 0555);
 
     return 0;
 }

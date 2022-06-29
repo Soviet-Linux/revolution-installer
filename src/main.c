@@ -100,6 +100,9 @@ int main (int argc, char** argv)
     printf("=== Mounting Remaining Devices ===\n");
     mount_dev(&part_list);
 
+    printf("=== Generating Base Directories ===\n");
+    gen_base_dir();
+
     printf("=== Extracting Squashfs Image ===\n");
     copy_sys_files(SQ_PATH, "/mnt/");
 
