@@ -57,8 +57,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-//#define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
-#define SQ_PATH "/media/iso/soviet-linux/01-core.sb"
+#define SQ_PATH "/run/initramfs/memory/bundles/01-core.sb"
 
 void get_str(int len, char *arr)
 {
@@ -125,5 +124,7 @@ int main (int argc, char** argv)
     create_grub_conf(&part_list);
 
     printf("=== Rebooting! ===\n");
-    //system("shutdown -r now");
+    system("shutdown -r now");
+
+    return 0;
 }
