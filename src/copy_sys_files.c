@@ -34,14 +34,24 @@ int copy_sys_files(char *sq_path, char *target)
 {
     int pid;
     int stat;
+    int rc;
 
     pid = fork();
 
     if (pid == 0) {
-        execl("/usr/bin/unsquashfs", "revolution-unsquashfs", "-d", target, sq_path, "*");
+        printf("Extracting image %s to %s\n", sq_path, target);
+        rc = execl("/usr/bin/unsquashfs", "revolution-unsquashfs", "-d", target, sq_path);
+        if (rc == -1) {
+            printf("Error executing unsquashfs. ERRNO: %s\n", strerror(errno));
+        }
+        exit(-1);
     }
 
-    waitpid(pid, NULL, 0);
+    waitpid(pid, &stat, 0);
+    
+    if (WIFEXITED(stat)) {
+        printf("Exit status: %d\n", WEXITSTATUS(stat));
+    }
 
     return 0;
 }
