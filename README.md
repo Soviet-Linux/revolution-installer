@@ -8,8 +8,8 @@ The installer of the Soviet-Linux operating system written in C.
 
 - gcc
 - cfdisk
-- fdisk
 - mkfs
+- squashfs-tools
 
 ### Installation
 
