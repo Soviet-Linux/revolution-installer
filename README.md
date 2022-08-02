@@ -13,6 +13,12 @@ The installer of the Soviet-Linux operating system written in C.
 
 ### Installation
 
+## Automatic
+1. Curl and run the script
+`curl raw.githubusercontent/Soviet-Linux/revolution-installer/main/install.sh | sh`
+
+## Manually
+
 1. Clone this repository:
 `# git clone https://github.com/Soviet-Linux/revolution-installer`
 
